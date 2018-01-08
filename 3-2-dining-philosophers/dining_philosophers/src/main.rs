@@ -3,13 +3,15 @@ use std::time::Duration;
 use std::sync::{Arc, Mutex};
 
 fn main() {
-    let table = Arc::new(Table { forks: vec![
-        Mutex::new(()),
-        Mutex::new(()),
-        Mutex::new(()),
-        Mutex::new(()),
-        Mutex::new(()),
-    ]});
+    let table = Arc::new(Table {
+        forks: vec![
+            Mutex::new(()),
+            Mutex::new(()),
+            Mutex::new(()),
+            Mutex::new(()),
+            Mutex::new(()),
+        ],
+    });
     let philosophers = vec![
         Philosopher::new("Judith Butler", 0, 1),
         Philosopher::new("Gilles Deleuze", 1, 2),
@@ -18,18 +20,20 @@ fn main() {
         Philosopher::new("Michel Foucault", 0, 4),
     ];
 
-    let handles: Vec<_> = philosophers.into_iter().map(|p| {
-        let table = table.clone();
-        spawn(move || {
-            p.eat(&table);
+    let handles: Vec<_> = philosophers
+        .into_iter()
+        .map(|p| {
+            let table = table.clone();
+            spawn(move || {
+                p.eat(&table);
+            })
         })
-    }).collect();
+        .collect();
 
     for h in handles {
         h.join().unwrap();
     }
 }
-
 
 struct Philosopher {
     name: String,
@@ -56,7 +60,6 @@ impl Philosopher {
         println!("{} is done eating.", self.name);
     }
 }
-
 
 struct Table {
     forks: Vec<Mutex<()>>,
