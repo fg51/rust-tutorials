@@ -1,4 +1,5 @@
 use std::thread::sleep;
+use std::thread::spawn;
 use std::time::Duration;
 
 fn main() {
@@ -10,8 +11,14 @@ fn main() {
         Philosopher::new("Michel Foucault"),
     ];
 
-    for p in &philosophers {
-        p.eat();
+    let handles: Vec<_> = philosophers.into_iter().map(|p| {
+        spawn(move || {
+            p.eat();
+        })
+    }).collect();
+
+    for h in handles {
+        h.join().unwrap();
     }
 }
 
