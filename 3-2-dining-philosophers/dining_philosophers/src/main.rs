@@ -1,3 +1,6 @@
+use std::thread::sleep;
+use std::time::Duration;
+
 fn main() {
     let philosophers = vec![
         Philosopher::new("Judith Butler"),
@@ -25,6 +28,8 @@ impl Philosopher {
     }
 
     fn eat(&self) {
+        println!("{} is eating.", self.name);
+        sleep(Duration::from_millis(1000));
         println!("{} is done eating.", self.name);
     }
 }
