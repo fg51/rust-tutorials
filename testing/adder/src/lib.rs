@@ -1,3 +1,20 @@
+//! this is module-level document
+//! `adder` crate provides fuction
+//!
+//! # Examples
+//!
+//! ```
+//! assert_eq!(4, adder::add_two(2));
+//! ```
+
+/// this function-level document
+///
+/// # Example
+///
+/// ```
+/// use adder::add_two;
+/// assert_eq!(4, add_two(2));
+/// ```
 pub fn add_two(a: i32) -> i32 {
     a + 2
 }
